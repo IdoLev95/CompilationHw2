@@ -1,0 +1,76 @@
+gcc -Wall -o parser lex.yy.c parser.tab.c
+edit_part1.lex: In function ‘yylex’:
+edit_part1.lex:76:1: error: expected ‘;’ before ‘}’ token
+ }
+ ^
+lex.yy.c:1160:12: error: invalid storage class for function ‘yy_get_next_buffer’
+ static int yy_get_next_buffer (void)
+            ^
+lex.yy.c:1294:26: error: invalid storage class for function ‘yy_get_previous_state’
+     static yy_state_type yy_get_previous_state (void)
+                          ^
+lex.yy.c:1326:26: error: invalid storage class for function ‘yy_try_NUL_trans’
+     static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )
+                          ^
+lex.yy.c:1351:17: error: invalid storage class for function ‘yyunput’
+     static void yyunput (int c, char * yy_bp )
+                 ^
+lex.yy.c:1398:16: error: invalid storage class for function ‘input’
+     static int input  (void)
+                ^
+lex.yy.c:1526:13: error: invalid storage class for function ‘yy_load_buffer_state’
+ static void yy_load_buffer_state  (void)
+             ^
+lex.yy.c:1587:17: error: invalid storage class for function ‘yy_init_buffer’
+     static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )
+                 ^
+lex.yy.c:1693:13: error: invalid storage class for function ‘yyensure_buffer_stack’
+ static void yyensure_buffer_stack (void)
+             ^
+lex.yy.c:1826:13: error: invalid storage class for function ‘yy_fatal_error’
+ static void yy_fatal_error (yyconst char* msg )
+             ^
+lex.yy.c:1929:12: error: invalid storage class for function ‘yy_init_globals’
+ static int yy_init_globals (void)
+            ^
+lex.yy.c:1987:13: error: invalid storage class for function ‘yy_flex_strncpy’
+ static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )
+             ^
+edit_part1.lex:124:1: error: expected declaration or statement at end of input
+edit_part1.lex:124:1: error: expected declaration or statement at end of input
+edit_part1.lex: At top level:
+lex.yy.c:323:13: warning: ‘yyensure_buffer_stack’ used but never defined
+ static void yyensure_buffer_stack (void );
+             ^
+lex.yy.c:324:13: warning: ‘yy_load_buffer_state’ used but never defined
+ static void yy_load_buffer_state (void );
+             ^
+lex.yy.c:325:13: warning: ‘yy_init_buffer’ used but never defined
+ static void yy_init_buffer (YY_BUFFER_STATE b,FILE *file  );
+             ^
+lex.yy.c:376:22: warning: ‘yy_get_previous_state’ used but never defined
+ static yy_state_type yy_get_previous_state (void );
+                      ^
+lex.yy.c:377:22: warning: ‘yy_try_NUL_trans’ used but never defined
+ static yy_state_type yy_try_NUL_trans (yy_state_type current_state  );
+                      ^
+lex.yy.c:378:12: warning: ‘yy_get_next_buffer’ used but never defined
+ static int yy_get_next_buffer (void );
+            ^
+lex.yy.c:382:13: warning: ‘yy_fatal_error’ used but never defined
+ static void yy_fatal_error (yyconst char msg[]  );
+             ^
+lex.yy.c:629:13: warning: ‘yy_flex_strncpy’ used but never defined
+ static void yy_flex_strncpy (char *,yyconst char *,int );
+             ^
+lex.yy.c:579:12: warning: ‘yy_init_globals’ declared ‘static’ but never defined [-Wunused-function]
+ static int yy_init_globals (void );
+            ^
+lex.yy.c:624:17: warning: ‘yyunput’ declared ‘static’ but never defined [-Wunused-function]
+     static void yyunput (int c,char *buf_ptr  );
+                 ^
+lex.yy.c:641:12: warning: ‘input’ declared ‘static’ but never defined [-Wunused-function]
+ static int input (void );
+            ^
+Makefile:21: recipe for target 'parser' failed
+make: *** [parser] Error 1

@@ -1,0 +1,117 @@
+func_arglist:
+    func_arglist ',' dcl
+    | dcl
+    ;
+
+blk:
+    '{' stlist '}'
+    ;
+
+stlist:
+    stlist stmt
+    | /* epsilon */
+    ;
+
+stmt:
+    dcl ';'
+    | assign_stmt
+    | exp_stmt
+    | cntrl
+    | write_stmt
+    | read_stmt
+    | return_stmt
+    | blk
+    ;
+
+assign_stmt:
+    ID ASSN exp ';'
+    ;
+
+exp_stmt:
+    exp ';'
+    ;
+
+cntrl:
+    if_stmt
+    | while_stmt
+    ;
+
+if_stmt:
+    if BEXP then stmt else stmt
+    | if BEXP then stmt
+    ;
+
+while_stmt:
+    while BEXP do stmt
+    ;
+
+write_stmt:
+    write '(' exp ')'
+    ;
+
+read_stmt:
+    read '(' lval ')'
+    ;
+
+return_stmt:
+    return exp ';'
+    | return ';'
+    ;
+
+exp:
+    exp addop exp
+    | exp mulop exp
+    | '(' exp ')'
+    | TYPE exp
+    | ID
+    | NUM
+    | call
+    | va_materialise
+    ;
+
+ASSN:
+    '='
+    ;
+
+dcl:
+    TYPE ID
+    | ID ',' dcl
+    ;
+
+lval:
+    ID
+    ;
+
+call:
+    ID '(' call_args ')'
+    ;
+
+call_args:
+    exp
+    | call_args ',' exp
+    ;
+
+va_materialise:
+    va_arg '(' TYPE ',' exp ')'
+    ;
+
+
+
+    /*program: 
+	FDEFS {$$ = makeNode($1->type,$1->value,$1);parseTree = $$;return 0;}
+FDEFS: 
+	TYPE expr {printf("TYPE: %s\n", $1->value);  $1 = concatList($1,$2);$$ = makeNode($1->value,$2->value,$1);}
+	| expr
+	;
+
+expr:
+    ID {
+        printf("ID: %s\n", $1->value);
+        $$ = $1;  // Return ParserNode pointer
+    }
+    | STRING {
+        printf("STRING: %s\n", $1->value);
+        $$ = $1;  // Return ParserNode pointer
+    }
+    ;
+*/

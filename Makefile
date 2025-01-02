@@ -1,51 +1,45 @@
-# Define source and object files
-SOURCES = parser.y edit_part1.lex part2_helpers.c
-OBJECTS = $(SOURCES:.cpp=.o) $(SOURCES:.c=.o)  # Include both C++ and C object files
-
-# Define the output executable
-EXEC = parser
-
-# Compiler and flags
-CXX = g++
+# Compiler and Tools
 CC = gcc
-CXXFLAGS = -std=c++17 -Wall -g
-CCFLAGS = -Wall -g
+FLEX = flex
+BISON = bison
 
-# Linker flags
+# Compiler Flags
+CFLAGS = -Wall -Wno-unused-function -g
 LDFLAGS = -lfl
 
-# Bison and Flex commands
-BISON = bison
-FLEX = flex
+# Source Files
+LEX_FILE = edit_part1.lex
+BISON_FILE = parser.y
+HELPERS_FILE = part2_helpers.c
 
-# Generated files
-BISON_OUTPUT = parser.tab.c
-BISON_HEADER = parser.tab.h
-FLEX_OUTPUT = lex.yy.c
+# Generated Files
+LEX_C = lex.yy.c
+BISON_C = parser.tab.c
+BISON_H = parser.tab.h
 
-# Rule to generate the parser and lexer files
-$(BISON_OUTPUT) $(FLEX_OUTPUT): parser.y edit_part1.lex
-	$(BISON) -d parser.y || (echo "Bison failed!"; exit 1)
-	$(FLEX) edit_part1.lex || (echo "Flex failed!"; exit 1)
+# Output
+TARGET = parser
 
-# Default rule to build the executable
-$(EXEC): $(BISON_OUTPUT) $(FLEX_OUTPUT) part2_helpers.c $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(EXEC) $(LDFLAGS)
+# Default Rule
+all: $(TARGET)
 
-# Rule to compile C++ source files into object files
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+# Flex Rule
+$(LEX_C): $(LEX_FILE)
+	$(FLEX) $(LEX_FILE)
 
-# Rule to compile C source files into object files
-%.o: %.c
-	$(CC) $(CCFLAGS) -c $< -o $@
+# Bison Rule
+$(BISON_C) $(BISON_H): $(BISON_FILE)
+	$(BISON) -d $(BISON_FILE)
 
-# Clean rule
+# Build Parser
+$(TARGET): $(LEX_C) $(BISON_C) $(HELPERS_FILE)
+	$(CC) $(CFLAGS) -o $(TARGET) $(LEX_C) $(BISON_C) $(HELPERS_FILE) $(LDFLAGS)
+
+# Clean Rule
 clean:
-	rm -f $(EXEC) $(BISON_OUTPUT) $(BISON_HEADER) $(FLEX_OUTPUT) *.o
+	rm -f $(LEX_C) $(BISON_C) $(BISON_H) $(TARGET)
 
-
-# Make sure part2_helpers.c is not erased (add this file explicitly)
-part2_helpers.c:
-	@echo "part2_helpers.c not found, make sure it exists and is not deleted."
+# Debug Rule
+debug:
+	$(CC) $(CFLAGS) -o $(TARGET) $(LEX_C) $(BISON_C) $(HELPERS_FILE) $(LDFLAGS)
 
